@@ -9,4 +9,16 @@ export const Container = styled.div`
   gap: 20px;
 `;
 
-export const Title = styled.h2``;
+export const BaseButton = styled.button`
+  width: 30%;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: #1A202C;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  
+ 
+`;
