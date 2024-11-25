@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Signin from "../pages/Signin";
+import Formulario from "../pages/Formulario"
 import useAuth from "../hooks/useAuth";
 import { Flex } from "@radix-ui/themes";
 
@@ -19,6 +20,11 @@ const RoutesApp = () => {
       <Fragment>
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
+          <Route
+            exact
+            path="/formulario"
+            element={<Private Item={Formulario} />} 
+          />
           <Route
             path="/"
             element={
