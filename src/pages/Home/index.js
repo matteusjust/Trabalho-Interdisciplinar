@@ -18,14 +18,14 @@ const Home = () => {
   const localizer = momentLocalizer(moment);
 
   const [open, setOpen] = useState(false);
-  const [modalPage, setModalPage] = useState("Formulario"); // Página padrão para o modal
+  const [modalPage, setModalPage] = useState("Formulario"); 
 
   const onCancel = () => {
     setOpen(false);
   };
 
   const openModal = (page) => {
-    setModalPage(page); // Define qual página será exibida no modal
+    setModalPage(page); 
     setOpen(true);
   };
 
