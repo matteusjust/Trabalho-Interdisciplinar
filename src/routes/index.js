@@ -5,7 +5,8 @@ import Signin from "../pages/Signin";
 import Formulario from "../pages/Formulario"
 import useAuth from "../hooks/useAuth";
 import { Flex } from "@radix-ui/themes";
-
+import Aluno from "../pages/Aluno";
+import Funcionario from "../pages/Funcionario";
 const Private = ({ Item }) => {
   const { signed } = useAuth(); //substitua o true po useAuth() para ligar o login
 
@@ -20,11 +21,9 @@ const RoutesApp = () => {
       <Fragment>
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
-          <Route
-            exact
-            path="/formulario"
-            element={<Private Item={Formulario} />} 
-          />
+          <Route exact path="/formulario" element={<Private Item={Formulario} />} />
+          <Route exact path="/aluno" element={<Private Item={Aluno} />} />
+          <Route exact path="/funcionario" element={<Private Item={Funcionario} />} />
           <Route
             path="/"
             element={

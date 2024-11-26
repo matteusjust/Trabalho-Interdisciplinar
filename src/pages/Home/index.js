@@ -8,55 +8,61 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import { Flex } from "@radix-ui/themes";
 import Modal from "../../components/Modal";
-import * as C from "./styles"; 
+import * as C from "./styles";
 
-require('globalize/lib/cultures/globalize.culture.fr');
+require("globalize/lib/cultures/globalize.culture.fr");
 
 const Home = () => {
   const { signout } = useAuth();
   const navigate = useNavigate();
   const localizer = momentLocalizer(moment);
 
-
-
   const [open, setOpen] = useState(false);
+  const [modalPage, setModalPage] = useState("Formulario"); // Página padrão para o modal
 
-   
-   const onCancel = () => {
-    setOpen(false); 
+  const onCancel = () => {
+    setOpen(false);
+  };
+
+  const openModal = (page) => {
+    setModalPage(page); // Define qual página será exibida no modal
+    setOpen(true);
   };
 
   return (
     <>
       <Header />
-      <Flex justify="center" align="center" marginBottom="50px" >
+      <Flex justify="center" align="center" marginBottom="50px">
         <C.BaseButton
-          onClick={() => setOpen(!open)}
+          onClick={() => openModal("Formulario")}
           background="#4caf50"
           hoverBackground="#388e3c"
-        >Marcar uma Data</C.BaseButton>
+        >
+          Marcar uma Data
+        </C.BaseButton>
       </Flex>
-      <Box 
-      style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: "20px", 
-      marginLeft: "70px",
-      height: "100vh",
-  }}>
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "20px",
+          marginLeft: "70px",
+          height: "100vh",
+        }}
+      >
         <Calendar
           localizer={localizer}
           defaultDate={new Date()}
           defaultView="month"
           style={{
             height: "80vh",
-            width: "95%", 
+            width: "95%",
           }}
           culture="pt-br"
         />
       </Box>
-      <Modal isOpen={open} onCancel={onCancel} />
+      <Modal isOpen={open} onCancel={onCancel} page={modalPage} />
     </>
   );
 };
