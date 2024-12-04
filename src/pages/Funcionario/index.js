@@ -12,7 +12,7 @@ const Funcionario = ({ onCancel }) => {
   const diasSemana = ["SEG", "TER", "QUA", "QUI", "SEX"];
   const opcoesPeriodos = ["M", "V"];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!nomeFuncionario) {
       setError("Por favor, insira o nome do funcionário.");
       setSuccess("");
@@ -39,13 +39,37 @@ const Funcionario = ({ onCancel }) => {
 
     const disponibilidade = { dias, periodos };
 
-    setError("");
-    setSuccess("Dados do funcionário salvos com sucesso!");
-    console.log("Funcionário:", {
-      nomeFuncionario,
-      idEspecialidade: especialidade,
-      disponibilidade,
-    });
+    const funcionario = {
+      nome_funcionario: nomeFuncionario,
+      id_especialidade: especialidade,
+      disponibilidade: JSON.stringify(disponibilidade),
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/funcionarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(funcionario),
+      });
+
+      if (response.ok) {
+        setError("");
+        setSuccess("Funcionário cadastrado com sucesso!");
+        setNomeFuncionario("");
+        setEspecialidade("");
+        setDias([]);
+        setPeriodos([]);
+      } else {
+        setError("Erro ao cadastrar funcionário.");
+        setSuccess("");
+      }
+    } catch (err) {
+      console.error("Erro ao enviar dados:", err);
+      setError("Erro ao conectar-se ao servidor.");
+      setSuccess("");
+    }
   };
 
   const handleCancel = () => {
@@ -70,7 +94,7 @@ const Funcionario = ({ onCancel }) => {
           borderRadius: "4px",
           border: "1px solid #ccc",
           margin: "8px auto",
-          display: "block", 
+          display: "block",
         }}
       />
       <select
@@ -98,8 +122,8 @@ const Funcionario = ({ onCancel }) => {
             display: "flex",
             gap: "16px",
             flexWrap: "wrap",
-            justifyContent: "center", 
-            alignItems: "center", 
+            justifyContent: "center",
+            alignItems: "center",
             marginTop: "8px",
           }}
         >
@@ -122,7 +146,7 @@ const Funcionario = ({ onCancel }) => {
             display: "flex",
             gap: "16px",
             justifyContent: "center",
-            alignItems: "center", 
+            alignItems: "center",
             marginTop: "8px",
           }}
         >

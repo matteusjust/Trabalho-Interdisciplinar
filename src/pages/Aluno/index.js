@@ -10,46 +10,46 @@ const Aluno = ({ onCancel }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = () => {
-    if (!nomeAluno) {
-      setError("Por favor, insira o nome do aluno.");
+  const handleSubmit = async () => {
+    if (!nomeAluno || !dataNascimento || !matricula || !contatoResponsavel || !diagnostico) {
+      setError("Por favor, preencha todos os campos.");
       setSuccess("");
       return;
     }
 
-    if (!dataNascimento) {
-      setError("Por favor, insira a data de nascimento.");
-      setSuccess("");
-      return;
-    }
+    try {
+      const response = await fetch("http://localhost:3000/alunos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome_aluno: nomeAluno,
+          data_nascimento: dataNascimento,
+          matricula: matricula,
+          contato_responsavel: contatoResponsavel,
+          diagnostico: diagnostico,
+        }),
+      });
 
-    if (!matricula) {
-      setError("Por favor, insira a matrícula.");
+      if (response.ok) {
+        setSuccess("Informações do aluno salvas com sucesso!");
+        setError("");
+        // Limpa os campos após o sucesso
+        setNomeAluno("");
+        setDataNascimento("");
+        setMatricula("");
+        setContatoResponsavel("");
+        setDiagnostico("");
+      } else {
+        setError("Erro ao salvar as informações. Tente novamente.");
+        setSuccess("");
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
       setSuccess("");
-      return;
+      console.error(err);
     }
-
-    if (!contatoResponsavel) {
-      setError("Por favor, insira o contato do responsável.");
-      setSuccess("");
-      return;
-    }
-
-    if (!diagnostico) {
-      setError("Por favor, insira o diagnóstico.");
-      setSuccess("");
-      return;
-    }
-
-    setError("");
-    setSuccess("Informações do aluno salvas com sucesso!");
-    console.log("Aluno:", {
-      nomeAluno,
-      dataNascimento,
-      matricula,
-      contatoResponsavel,
-      diagnostico,
-    });
   };
 
   const handleCancel = () => {
@@ -101,7 +101,7 @@ const Aluno = ({ onCancel }) => {
           background="#4caf50"
           hoverBackground="#388e3c"
         >
-          Criar Usuario
+          Criar Usuário
         </C.BaseButton>
         <C.BaseButton
           background="#f44336"
