@@ -1,40 +1,44 @@
-import React from 'react'
-import { Container, Content } from './styles'
-import { 
-  FaTimes, 
-  FaHome, 
-  FaEnvelope, 
-  FaRegSun, 
-  FaUserAlt, 
-  FaIdCardAlt, 
-  FaRegFileAlt,
-  FaRegCalendarAlt,
-  FaChartBar
-} from 'react-icons/fa'
+import React from "react";
+import { Container, Content } from "./styles";
+import { FaTimes, FaHome, FaPersonBooth, FaTicketAlt } from "react-icons/fa";
 
-import SidebarItem from '../SidebarItem'
+import SidebarItem from "../SidebarItem";
+import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
 
 const Sidebar = ({ active }) => {
+  const navigate = useNavigate(); // Instância do hook useNavigate
 
   const closeSidebar = () => {
-    active(false)
-  }
+    active(false);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path); // Navega para o caminho especificado
+    closeSidebar();
+  };
 
   return (
     <Container sidebar={active}>
-      <FaTimes onClick={closeSidebar} />  
+      <FaTimes onClick={closeSidebar} />
       <Content>
-        <SidebarItem Icon={FaHome} Text="1" />
-        <SidebarItem Icon={FaHome} Text="2" />
-        <SidebarItem Icon={FaHome} Text="3" />
-        <SidebarItem Icon={FaHome} Text="4" />
-        <SidebarItem Icon={FaHome} Text="5" />
-        <SidebarItem Icon={FaHome} Text="6" />
-        <SidebarItem Icon={FaHome} Text="7" />
-        <SidebarItem Icon={FaHome} Text="8" />
+        <SidebarItem
+          Icon={FaHome}
+          Text="Home"
+          onClick={() => handleNavigation("/home")}
+        />
+        <SidebarItem
+          Icon={FaPersonBooth}
+          Text="Alunos"
+          onClick={() => handleNavigation("/alunos")}
+        />
+        <SidebarItem
+          Icon={FaTicketAlt}
+          Text="Funcionarios"
+          onClick={() => handleNavigation("/funcionarios")}
+        />
       </Content>
     </Container>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
